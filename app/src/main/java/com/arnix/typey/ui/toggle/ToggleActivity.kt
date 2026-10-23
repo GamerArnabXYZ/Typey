@@ -1,0 +1,62 @@
+package com.arnix.typey.ui.toggle
+
+import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.arnix.typey.common.base.BaseComposeActivity
+import com.arnix.typey.model.KeyboardFeatureModel
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class ToggleActivity : BaseComposeActivity() {
+
+    private val viewModel: ToggleViewModel by viewModels()
+
+    private var featureList by mutableStateOf<List<KeyboardFeatureModel>>(emptyList())
+    private val toggleStates = mutableStateMapOf<String, Boolean>()
+    private var alwaysShowFeature by mutableStateOf<String?>(null)
+
+    override fun onCreateExt(savedInstanceState: Bundle?) {
+        super.onCreateExt(savedInstanceState)
+        alwaysShowFeature = viewModel.getAlwaysShowFeature()
+        viewModel.keyboardFeatureState.observe(this) { list ->
+            featureList = list
+            list.forEach { feature ->
+                toggleStates[feature.id] = viewModel.getSwitchToggle(feature.id)
+            }
+        }
+        viewModel.getKeyboardFeatureData()
+    }
+
+    @Composable
+    override fun Content() {
+        ToggleScreen(
+            features = featureList,
+            getToggleState = { id -> toggleStates[id] ?: viewModel.getSwitchToggle(id) },
+            onToggleChanged = { id, isChecked ->
+                toggleStates[id] = isChecked
+                viewModel.switchToggle(id, isChecked)
+            },
+            onMoveFeature = { from, to ->
+                viewModel.moveFeature(from, to)
+            },
+            onSwapFeature = { from, to ->
+                viewModel.swapFeatures(from, to)
+            },
+            onResetOrder = {
+                viewModel.resetFeatureOrder()
+            },
+            alwaysShowFeatureId = alwaysShowFeature,
+            onToggleAlwaysShow = { featureId ->
+                val next = if (alwaysShowFeature == featureId) null else featureId
+                alwaysShowFeature = next
+                viewModel.setAlwaysShowFeature(next)
+            },
+            onBackClick = { finish() }
+        )
+    }
+}

@@ -1,0 +1,15 @@
+package com.arnix.typey.model
+
+import androidx.annotation.Keep
+
+/**
+ * Created by Faisal Amir on 10/03/23
+ * https://github.com/amirisback
+ */
+
+
+@Keep
+enum class AutoTextLabelType {
+    DEFAULT,
+    USER
+}

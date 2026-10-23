@@ -1,0 +1,15 @@
+<resources>
+
+    <style name="TypeyKeyboard">
+        <item name="itemTextAppearance">?attr/itemTextAppearance</item>
+    </style>
+
+    <style name="TypeyKeyboardView" parent="TypeyKeyboard">
+        <item name="keyTextSize">@dimen/keyboard_text_size</item>
+    </style>
+
+    <style name="TypeyKeyboardViewPopup" parent="TypeyKeyboard">
+        <item name="keyTextSize">@dimen/preview_text_size</item>
+    </style>
+
+</resources>

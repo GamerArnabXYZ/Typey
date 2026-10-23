@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <queries>
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".MainApp"
+        android:allowBackup="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name_short"
+        android:roundIcon="@drawable/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TypeyNoActionBar"
+        tools:targetApi="tiramisu">
+
+        <activity
+            android:name=".ui.test.TestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.productremote.ProductRemoteActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.autotext.AutoTextActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.autotext.AutoTextEditorActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.autotext.AutoTextDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.templatetext.TemplateTextActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.toggle.ToggleActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.theme.ThemeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.sound.SoundActivity"
+            android:exported="false" />
+
+        <activity android:name=".ui.language.KeyboardLanguageActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TypeyNoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".services.KeyboardIME"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/keys_config" />
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+        </service>
+
+        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
+
+    </application>
+
+</manifest>
